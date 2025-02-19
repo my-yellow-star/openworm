@@ -35,10 +35,13 @@
 
 ```sh
 pnpm install
+```
 
 2️⃣ 프로젝트 실행
 
+```sh
 pnpm run dev
+```
 
 이제 브라우저에서 http://localhost:3000 에 접속하면 시뮬레이션을 확인할 수 있습니다.
 
@@ -48,6 +51,7 @@ pnpm run dev
 
 뉴런의 막전위(v)가 특정 임계값(30mV)를 초과하면 발화(spike)가 발생합니다.
 
+```typescript
 update(I: number) {
   this.v += 0.04 * this.v ** 2 + 5 * this.v + 140 - this.u + I;
   this.u += this.a * (this.b * this.v - this.u);
@@ -60,9 +64,11 @@ update(I: number) {
     this.spike = false;
   }
 }
+```
 
 🔹 신경 네트워크 업데이트
 
+```typescript
 updateNetwork(inputSignals: { [key: string]: number }) {
   for (const [id, neuron] of this.neurons) {
     const I = inputSignals[id] || 0;
@@ -88,11 +94,13 @@ updateNetwork(inputSignals: { [key: string]: number }) {
 
   this.position.x += this.muscles.values().reduce((sum, muscle) => sum + muscle.activation * 0.01, 0);
 }
+```
 
 🎮 주요 인터페이스
 
 Neuron.ts
 
+```typescript
 /**
  *
  * @property a: 시간 스케일, u가 얼마나 빠르게 변화하는지 조절.
@@ -156,9 +164,11 @@ export class Neuron {
     this.synapses = [];
   }
 }
+```
 
 Muscle.ts
 
+```typescript
 export class Muscle {
   id: string; // Landmark
   activation: number;
@@ -196,9 +206,11 @@ export class Muscle {
     this.activation = Math.max(0, this.activation - rate);
   }
 }
+```
 
 📌 향후 개선 사항
 
+```
 ✅ 벌레 움직임 애니메이션 추가 (더 자연스러운 이동 반영)
 ✅ 환경 변화(터치, 자극 등)에 대한 반응 구현
 ✅ 근육과 신경의 생물학적 연결 관계 더 정밀하게 반영
